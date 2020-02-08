@@ -32,34 +32,51 @@ var data = [
 var datoscartilla = {
   "petName":"Siri",
   "petGender":"Hembra",
-  "petOwner":"María Martínez",
-  "petVetName":"Clínica Guau Vet",
   "petBirthDate":"01 de diciembre del 2017",
   "petBreed":"Golden Retriever",
   "petId":"986214554",
-  "petAddress":"Av. Argómedo #6241,Villa altos del nilo,Guadalajara",
   "petColor":"Blanco",
-  "petPhone":"33-44-66-77-99",
   "petPic":"assets/JPEG/siri.jpg"
+};
+var datosCartillaOwner ={
+    "petOwner":"María Martínez",
+    "petAddress":"Av. Argómedo #6241,Villa altos del nilo,Guadalajara",
+    "petPhone":"33-44-66-77-99",
+};
+var datosCartillaVet = {
+  "petVetName":"Clínica Guau Vet",
 };
 
 $(document).ready(function() {
   llenarInfo()
+  llenarInfoOwner()
+  llenarInfoVet()
   llenarTabla();
 });
 
 function llenarInfo() {
-  setLabelText('#petName', datoscartilla.petName)
-  setLabelText('#petGender', datoscartilla.petGender)
-  setLabelText('#petOwner', datoscartilla.petOwner)
-  setLabelText('#petVetName', datoscartilla.petVetName)
-  setLabelText('#petBirthDate', datoscartilla.petBirthDate)
-  setLabelText('#petBreed', datoscartilla.petBreed)
-  setLabelText('#petId', datoscartilla.petId)
-  setLabelText('#petAddress', datoscartilla.petAddress)
-  setLabelText('#petColor', datoscartilla.petColor)
-  setLabelText('#petPhone', datoscartilla.petPhone)
-  $("#petPic").attr("src",datoscartilla.petPic);
+  $.ajax({
+    url:"http://localhost:8080/pet/1"
+  }).then(function(datoscartilla){
+    setLabelText('#petName', datoscartilla.name)
+    setLabelText('#petGender', datoscartilla.gender)
+    setLabelText('#petBirthDate', datoscartilla.birthday)
+    setLabelText('#petBreed', datoscartilla.breed)
+    setLabelText('#petId', datoscartilla.id)
+    setLabelText('#petColor', datoscartilla.color);
+    //$("#petPic").attr("src",datoscartilla.petPic);
+  });
+
+}
+
+function llenarInfoOwner(){
+  setLabelText('#petOwner', datosCartillaOwner.petOwner)
+  setLabelText('#petAddress', datosCartillaOwner.petAddress)
+  setLabelText('#petPhone', datosCartillaOwner.petPhone)
+}
+
+function llenarInfoVet(){
+    setLabelText('#petVetName', datosCartillaVet.petVetName)
 }
 
 function setLabelText(labelId, labelText){
